@@ -1,0 +1,733 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EFCommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CARI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" />
+          <Property Name="LASTNAME" Type="varchar" MaxLength="50" />
+          <Property Name="CITY" Type="varchar" MaxLength="20" />
+          <Property Name="MAIL" Type="varchar" MaxLength="100" />
+          <Property Name="IMAGE" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="CARILOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" />
+          <Property Name="IMAGE" Type="varchar" MaxLength="250" />
+          <Property Name="STATUS" Type="bit" />
+        </EntityType>
+        <EntityType Name="DEPARTMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" />
+          <Property Name="IMAGE" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" />
+          <Property Name="LASTNAME" Type="varchar" MaxLength="50" />
+          <Property Name="MAIL" Type="varchar" MaxLength="100" />
+          <Property Name="IMAGE" Type="varchar" MaxLength="250" />
+          <Property Name="DEPARTMENT" Type="int" />
+        </EntityType>
+        <EntityType Name="EMPLOYEELOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="SUPERSCRIPTION" Type="varchar" MaxLength="10" />
+          <Property Name="IMAGE" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="EXPENSE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COMMENT" Type="varchar" MaxLength="100" />
+          <Property Name="DATE" Type="datetime" />
+          <Property Name="GENERALPRICE" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="INVOICE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SERIALNO" Type="varchar" MaxLength="6" />
+          <Property Name="QUEUENO" Type="varchar" MaxLength="6" />
+          <Property Name="DATE" Type="datetime" />
+          <Property Name="TAX" Type="varchar" MaxLength="50" />
+          <Property Name="TIME" Type="datetime" />
+          <Property Name="RECEIVER" Type="varchar" MaxLength="50" />
+          <Property Name="SENDER" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="INVOICEPEN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COMMENT" Type="varchar" MaxLength="100" />
+          <Property Name="COUNT" Type="int" />
+          <Property Name="UNITPRICE" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="GENERALPRICE" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="INVOICE" Type="int" />
+        </EntityType>
+        <EntityType Name="MESSAGE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SENDERMAIL" Type="varchar" MaxLength="100" />
+          <Property Name="RECEIVERMAIL" Type="varchar" MaxLength="100" />
+          <Property Name="ISSUE" Type="varchar" MaxLength="50" />
+          <Property Name="COMMENT" Type="varchar" MaxLength="1000" />
+          <Property Name="DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" />
+          <Property Name="BRAND" Type="varchar" MaxLength="20" />
+          <Property Name="STOCK" Type="int" />
+          <Property Name="BUYPRICE" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="SALESPRICE" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="STATUS" Type="bit" />
+          <Property Name="IMAGE" Type="varchar" MaxLength="250" />
+          <Property Name="CATEGORY" Type="int" />
+        </EntityType>
+        <EntityType Name="SALESMOVEMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DATE" Type="datetime" />
+          <Property Name="GENERALPRICE" Type="float" />
+          <Property Name="EMPLOYEEID" Type="int" />
+          <Property Name="CARIID" Type="int" />
+        </EntityType>
+        <EntityType Name="SALESMOVEMENTLOWER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="GeneralPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="SalesMovementID" Type="int" />
+        </EntityType>
+        <Association Name="FK_EMPLOYEE_DEPARTMENT">
+          <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="0..1" />
+          <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE">
+              <PropertyRef Name="DEPARTMENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INVOICEPEN_INVOICE">
+          <End Role="INVOICE" Type="Self.INVOICE" Multiplicity="0..1" />
+          <End Role="INVOICEPEN" Type="Self.INVOICEPEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INVOICE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="INVOICEPEN">
+              <PropertyRef Name="INVOICE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_CATEGORY">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="CATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALESMOVEMENT_CARI">
+          <End Role="CARI" Type="Self.CARI" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENT" Type="Self.SALESMOVEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENT">
+              <PropertyRef Name="CARIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALESMOVEMENT_EMPLOYEE">
+          <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENT" Type="Self.SALESMOVEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENT">
+              <PropertyRef Name="EMPLOYEEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALESMOVEMENTLOWER_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENTLOWER" Type="Self.SALESMOVEMENTLOWER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENTLOWER">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALESMOVEMENTLOWER_SALESMOVEMENT">
+          <End Role="SALESMOVEMENT" Type="Self.SALESMOVEMENT" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENTLOWER" Type="Self.SALESMOVEMENTLOWER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALESMOVEMENT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENTLOWER">
+              <PropertyRef Name="SalesMovementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EFCommerceModelStoreContainer">
+          <EntitySet Name="CARI" EntityType="Self.CARI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CARILOGIN" EntityType="Self.CARILOGIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEPARTMENT" EntityType="Self.DEPARTMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEE" EntityType="Self.EMPLOYEE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEELOGIN" EntityType="Self.EMPLOYEELOGIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXPENSE" EntityType="Self.EXPENSE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INVOICE" EntityType="Self.INVOICE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INVOICEPEN" EntityType="Self.INVOICEPEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESSAGE" EntityType="Self.MESSAGE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALESMOVEMENT" EntityType="Self.SALESMOVEMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALESMOVEMENTLOWER" EntityType="Self.SALESMOVEMENTLOWER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EMPLOYEE_DEPARTMENT" Association="Self.FK_EMPLOYEE_DEPARTMENT">
+            <End Role="DEPARTMENT" EntitySet="DEPARTMENT" />
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INVOICEPEN_INVOICE" Association="Self.FK_INVOICEPEN_INVOICE">
+            <End Role="INVOICE" EntitySet="INVOICE" />
+            <End Role="INVOICEPEN" EntitySet="INVOICEPEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALESMOVEMENT_CARI" Association="Self.FK_SALESMOVEMENT_CARI">
+            <End Role="CARI" EntitySet="CARI" />
+            <End Role="SALESMOVEMENT" EntitySet="SALESMOVEMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALESMOVEMENT_EMPLOYEE" Association="Self.FK_SALESMOVEMENT_EMPLOYEE">
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
+            <End Role="SALESMOVEMENT" EntitySet="SALESMOVEMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALESMOVEMENTLOWER_PRODUCT" Association="Self.FK_SALESMOVEMENTLOWER_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="SALESMOVEMENTLOWER" EntitySet="SALESMOVEMENTLOWER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALESMOVEMENTLOWER_SALESMOVEMENT" Association="Self.FK_SALESMOVEMENTLOWER_SALESMOVEMENT">
+            <End Role="SALESMOVEMENT" EntitySet="SALESMOVEMENT" />
+            <End Role="SALESMOVEMENTLOWER" EntitySet="SALESMOVEMENTLOWER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EFCommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CARI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LASTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CITY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SALESMOVEMENT" Relationship="Self.FK_SALESMOVEMENT_CARI" FromRole="CARI" ToRole="SALESMOVEMENT" />
+        </EntityType>
+        <EntityType Name="CARILOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS" Type="Boolean" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="CATEGORY" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="DEPARTMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_EMPLOYEE_DEPARTMENT" FromRole="DEPARTMENT" ToRole="EMPLOYEE" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LASTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DEPARTMENT" Type="Int32" />
+          <NavigationProperty Name="DEPARTMENT1" Relationship="Self.FK_EMPLOYEE_DEPARTMENT" FromRole="EMPLOYEE" ToRole="DEPARTMENT" />
+          <NavigationProperty Name="SALESMOVEMENT" Relationship="Self.FK_SALESMOVEMENT_EMPLOYEE" FromRole="EMPLOYEE" ToRole="SALESMOVEMENT" />
+        </EntityType>
+        <EntityType Name="EMPLOYEELOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SUPERSCRIPTION" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EXPENSE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COMMENT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DATE" Type="DateTime" Precision="3" />
+          <Property Name="GENERALPRICE" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="INVOICE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SERIALNO" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="QUEUENO" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DATE" Type="DateTime" Precision="3" />
+          <Property Name="TAX" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TIME" Type="DateTime" Precision="3" />
+          <Property Name="RECEIVER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="INVOICEPEN" Relationship="Self.FK_INVOICEPEN_INVOICE" FromRole="INVOICE" ToRole="INVOICEPEN" />
+        </EntityType>
+        <EntityType Name="INVOICEPEN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COMMENT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="COUNT" Type="Int32" />
+          <Property Name="UNITPRICE" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="GENERALPRICE" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="INVOICE" Type="Int32" />
+          <NavigationProperty Name="INVOICE1" Relationship="Self.FK_INVOICEPEN_INVOICE" FromRole="INVOICEPEN" ToRole="INVOICE" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BRAND" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="STOCK" Type="Int32" />
+          <Property Name="BUYPRICE" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SALESPRICE" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="STATUS" Type="Boolean" />
+          <Property Name="IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CATEGORY" Type="Int32" />
+          <NavigationProperty Name="CATEGORY1" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="PRODUCT" ToRole="CATEGORY" />
+          <NavigationProperty Name="SALESMOVEMENTLOWER" Relationship="Self.FK_SALESMOVEMENTLOWER_PRODUCT" FromRole="PRODUCT" ToRole="SALESMOVEMENTLOWER" />
+        </EntityType>
+        <EntityType Name="SALESMOVEMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DATE" Type="DateTime" Precision="3" />
+          <Property Name="GENERALPRICE" Type="Double" />
+          <Property Name="EMPLOYEEID" Type="Int32" />
+          <Property Name="CARIID" Type="Int32" />
+          <NavigationProperty Name="CARI" Relationship="Self.FK_SALESMOVEMENT_CARI" FromRole="SALESMOVEMENT" ToRole="CARI" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK_SALESMOVEMENT_EMPLOYEE" FromRole="SALESMOVEMENT" ToRole="EMPLOYEE" />
+          <NavigationProperty Name="SALESMOVEMENTLOWER" Relationship="Self.FK_SALESMOVEMENTLOWER_SALESMOVEMENT" FromRole="SALESMOVEMENT" ToRole="SALESMOVEMENTLOWER" />
+        </EntityType>
+        <EntityType Name="SALESMOVEMENTLOWER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="GeneralPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="SalesMovementID" Type="Int32" />
+          <NavigationProperty Name="PRODUCT" Relationship="Self.FK_SALESMOVEMENTLOWER_PRODUCT" FromRole="SALESMOVEMENTLOWER" ToRole="PRODUCT" />
+          <NavigationProperty Name="SALESMOVEMENT" Relationship="Self.FK_SALESMOVEMENTLOWER_SALESMOVEMENT" FromRole="SALESMOVEMENTLOWER" ToRole="SALESMOVEMENT" />
+        </EntityType>
+        <Association Name="FK_SALESMOVEMENT_CARI">
+          <End Role="CARI" Type="Self.CARI" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENT" Type="Self.SALESMOVEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENT">
+              <PropertyRef Name="CARIID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_CATEGORY">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="CATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_DEPARTMENT">
+          <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="0..1" />
+          <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEE">
+              <PropertyRef Name="DEPARTMENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALESMOVEMENT_EMPLOYEE">
+          <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENT" Type="Self.SALESMOVEMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENT">
+              <PropertyRef Name="EMPLOYEEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INVOICEPEN_INVOICE">
+          <End Role="INVOICE" Type="Self.INVOICE" Multiplicity="0..1" />
+          <End Role="INVOICEPEN" Type="Self.INVOICEPEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INVOICE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="INVOICEPEN">
+              <PropertyRef Name="INVOICE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALESMOVEMENTLOWER_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENTLOWER" Type="Self.SALESMOVEMENTLOWER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENTLOWER">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALESMOVEMENTLOWER_SALESMOVEMENT">
+          <End Role="SALESMOVEMENT" Type="Self.SALESMOVEMENT" Multiplicity="0..1" />
+          <End Role="SALESMOVEMENTLOWER" Type="Self.SALESMOVEMENTLOWER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALESMOVEMENT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SALESMOVEMENTLOWER">
+              <PropertyRef Name="SalesMovementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EFCommerceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CARI" EntityType="Self.CARI" />
+          <EntitySet Name="CARILOGIN" EntityType="Self.CARILOGIN" />
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" />
+          <EntitySet Name="DEPARTMENT" EntityType="Self.DEPARTMENT" />
+          <EntitySet Name="EMPLOYEE" EntityType="Self.EMPLOYEE" />
+          <EntitySet Name="EMPLOYEELOGIN" EntityType="Self.EMPLOYEELOGIN" />
+          <EntitySet Name="EXPENSE" EntityType="Self.EXPENSE" />
+          <EntitySet Name="INVOICE" EntityType="Self.INVOICE" />
+          <EntitySet Name="INVOICEPEN" EntityType="Self.INVOICEPEN" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" />
+          <EntitySet Name="SALESMOVEMENT" EntityType="Self.SALESMOVEMENT" />
+          <EntitySet Name="SALESMOVEMENTLOWER" EntityType="Self.SALESMOVEMENTLOWER" />
+          <AssociationSet Name="FK_SALESMOVEMENT_CARI" Association="Self.FK_SALESMOVEMENT_CARI">
+            <End Role="CARI" EntitySet="CARI" />
+            <End Role="SALESMOVEMENT" EntitySet="SALESMOVEMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_DEPARTMENT" Association="Self.FK_EMPLOYEE_DEPARTMENT">
+            <End Role="DEPARTMENT" EntitySet="DEPARTMENT" />
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALESMOVEMENT_EMPLOYEE" Association="Self.FK_SALESMOVEMENT_EMPLOYEE">
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEE" />
+            <End Role="SALESMOVEMENT" EntitySet="SALESMOVEMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INVOICEPEN_INVOICE" Association="Self.FK_INVOICEPEN_INVOICE">
+            <End Role="INVOICE" EntitySet="INVOICE" />
+            <End Role="INVOICEPEN" EntitySet="INVOICEPEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALESMOVEMENTLOWER_PRODUCT" Association="Self.FK_SALESMOVEMENTLOWER_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="SALESMOVEMENTLOWER" EntitySet="SALESMOVEMENTLOWER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALESMOVEMENTLOWER_SALESMOVEMENT" Association="Self.FK_SALESMOVEMENTLOWER_SALESMOVEMENT">
+            <End Role="SALESMOVEMENT" EntitySet="SALESMOVEMENT" />
+            <End Role="SALESMOVEMENTLOWER" EntitySet="SALESMOVEMENTLOWER" />
+          </AssociationSet>
+          <EntitySet Name="MESSAGE" EntityType="EFCommerceModel.MESSAGE" />
+        </EntityContainer>
+        <EntityType Name="MESSAGE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SENDERMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVERMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ISSUE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COMMENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EFCommerceModelStoreContainer" CdmEntityContainer="EFCommerceEntities">
+          <EntitySetMapping Name="CARI">
+            <EntityTypeMapping TypeName="EFCommerceModel.CARI">
+              <MappingFragment StoreEntitySet="CARI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CARILOGIN">
+            <EntityTypeMapping TypeName="EFCommerceModel.CARILOGIN">
+              <MappingFragment StoreEntitySet="CARILOGIN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORY">
+            <EntityTypeMapping TypeName="EFCommerceModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORY">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPARTMENT">
+            <EntityTypeMapping TypeName="EFCommerceModel.DEPARTMENT">
+              <MappingFragment StoreEntitySet="DEPARTMENT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEE">
+            <EntityTypeMapping TypeName="EFCommerceModel.EMPLOYEE">
+              <MappingFragment StoreEntitySet="EMPLOYEE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+                <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+                <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEELOGIN">
+            <EntityTypeMapping TypeName="EFCommerceModel.EMPLOYEELOGIN">
+              <MappingFragment StoreEntitySet="EMPLOYEELOGIN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="SUPERSCRIPTION" ColumnName="SUPERSCRIPTION" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXPENSE">
+            <EntityTypeMapping TypeName="EFCommerceModel.EXPENSE">
+              <MappingFragment StoreEntitySet="EXPENSE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="GENERALPRICE" ColumnName="GENERALPRICE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INVOICE">
+            <EntityTypeMapping TypeName="EFCommerceModel.INVOICE">
+              <MappingFragment StoreEntitySet="INVOICE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SERIALNO" ColumnName="SERIALNO" />
+                <ScalarProperty Name="QUEUENO" ColumnName="QUEUENO" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="TAX" ColumnName="TAX" />
+                <ScalarProperty Name="TIME" ColumnName="TIME" />
+                <ScalarProperty Name="RECEIVER" ColumnName="RECEIVER" />
+                <ScalarProperty Name="SENDER" ColumnName="SENDER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INVOICEPEN">
+            <EntityTypeMapping TypeName="EFCommerceModel.INVOICEPEN">
+              <MappingFragment StoreEntitySet="INVOICEPEN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+                <ScalarProperty Name="UNITPRICE" ColumnName="UNITPRICE" />
+                <ScalarProperty Name="GENERALPRICE" ColumnName="GENERALPRICE" />
+                <ScalarProperty Name="INVOICE" ColumnName="INVOICE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT">
+            <EntityTypeMapping TypeName="EFCommerceModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="BRAND" ColumnName="BRAND" />
+                <ScalarProperty Name="STOCK" ColumnName="STOCK" />
+                <ScalarProperty Name="BUYPRICE" ColumnName="BUYPRICE" />
+                <ScalarProperty Name="SALESPRICE" ColumnName="SALESPRICE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SALESMOVEMENT">
+            <EntityTypeMapping TypeName="EFCommerceModel.SALESMOVEMENT">
+              <MappingFragment StoreEntitySet="SALESMOVEMENT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="GENERALPRICE" ColumnName="GENERALPRICE" />
+                <ScalarProperty Name="EMPLOYEEID" ColumnName="EMPLOYEEID" />
+                <ScalarProperty Name="CARIID" ColumnName="CARIID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SALESMOVEMENTLOWER">
+            <EntityTypeMapping TypeName="EFCommerceModel.SALESMOVEMENTLOWER">
+              <MappingFragment StoreEntitySet="SALESMOVEMENTLOWER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="GeneralPrice" ColumnName="GeneralPrice" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SalesMovementID" ColumnName="SalesMovementID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESSAGE">
+            <EntityTypeMapping TypeName="EFCommerceModel.MESSAGE">
+              <MappingFragment StoreEntitySet="MESSAGE">
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="ISSUE" ColumnName="ISSUE" />
+                <ScalarProperty Name="RECEIVERMAIL" ColumnName="RECEIVERMAIL" />
+                <ScalarProperty Name="SENDERMAIL" ColumnName="SENDERMAIL" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

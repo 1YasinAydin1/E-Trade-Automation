@@ -1,0 +1,226 @@
+﻿@using Asp.NET_E_Commerce_MVC5_ENTITY_.Models
+@model List<CATEGORY>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+
+
+@section scripts {
+
+    <link rel="stylesheet" href="~/Content/jquery.fancybox.css?v=2.1.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="~/Scripts/jquery.fancybox.pack.js?v=2.1.7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        var mainUrl = $("#mainconfig").attr("data-mainurl");
+        var HtmlKayit = '';
+
+        function forTable(data) {
+            for (var i = 0; i < data.length; i++) {
+                debugger;
+                var Status = data[i].STATUS == true ? "Etkin" : "Pasif";
+                HtmlKayit += '<tr>\
+                <td>' + data[i].ID + '</td>\
+                <td >' + data[i].NAME + '</td>\
+                <td><a data-type="ajax" href="' + mainUrl + 'Image/' + data[i].IMAGE + '" class="fancybox" rel="group"><img src="' + mainUrl + 'Image/' + data[i].IMAGE + '" height="40" /></a></td>\
+                <td>' + Status + '</td>\
+                <td><a class="btn text-danger p-0" href="' + mainUrl + 'CATEGORY/CATEGORY_DELETE/' + data[i].ID + '" id="deletedelete">Sil</a></td>\
+                <td><a class="btn text-info p-0" href="' + mainUrl + 'CATEGORY/CATEGORY_UPDATE/' + data[i].ID + '">Güncelle</a></td>\
+                </tr>';
+            }
+        };
+
+        function getModelKayitListesi() {
+            $.ajax({
+                url: '@Url.Content("~/CATEGORY/GetCategorys")',
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                        HtmlKayit = '';
+                        if (data.length != undefined && data.length != null && data.length > 0) {
+                            forTable(data);
+                            $("#ModelKayitListesi").html(HtmlKayit);
+                            killFancybox();
+                    }
+                }
+            });
+        };
+
+        function killFancybox() {
+            $('.fancybox').unbind('click.fb-start');
+
+            $('.fancybox').fancybox({
+                openEffect: 'elastic',
+                closeEffect: 'elastic',
+            });
+        }
+        $(function () {
+
+            if ($('i').hasClass('swalFireADD')) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Eklendi',
+                    text: 'Categori Başarı ile Eklendi!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+            if ($('i').hasClass('swalFireDELETE')) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Silindi',
+                    text: 'Categori Başarı ile Silindi!',
+                    confirmButtonText: 'Kapat'
+                })
+            }
+
+            killFancybox();
+            getModelKayitListesi();
+
+            $('a.pageNo').click(function () {
+                var key = $(this).html() - 1;
+                var key1 = $("#pageOptions").val();
+                $.ajax({
+                    //+ '&pageOptions=' + key1
+                    url: '@Url.Content("~/CATEGORY/GetCategorys?pageNo=")' + key + '&pageOptions='+key1,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        HtmlKayit = '';
+                        if (data.length != undefined && data.length != null && data.length > 0) {
+                            forTable(data);
+                            $("#ModelKayitListesi").html(HtmlKayit);
+                            killFancybox();
+                        }
+                    }
+                });
+            });
+            $('#searchRemove').hide();
+            $('#searchRemove').click(() => {
+                getModelKayitListesi();
+                $('#searchRemove').hide();
+            });
+
+            $('#pageOptions').change(function () {
+                var key1 = $('a.pageNo').html();
+                debugger;
+                var key = $(this).val();
+                $.ajax({
+                    url: '@Url.Content("~/CATEGORY/GetCategorys?pageNo=")' + key1 + '&pageOptions='+key,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        debugger;
+                        HtmlKayit = '';
+                        if (data.length != undefined && data.length != null && data.length > 0) {
+                            forTable(data);
+                            $("#ModelKayitListesi").html(HtmlKayit);
+                            killFancybox();
+                        }
+                    }
+                });
+            });
+            $("#searchSubmit").click(function () {
+                $('#searchRemove').show();
+                var id = $("#searchTextBox").val();
+                $.ajax({
+                    url: '@Url.Content("~/CATEGORY/GetCategorysFilter?name=")' + id,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        HtmlKayit = '';
+                        if (data.length != undefined && data.length != null && data.length > 0) {
+                            forTable(data);
+                            $("#ModelKayitListesi").html(HtmlKayit);
+                            killFancybox();
+                        }
+
+                    }
+                });
+
+            });
+
+            $("#searchSubmit").click(function () {
+
+            });
+        });
+    </script>
+}
+
+<div class="container-fluid mt-1">
+    @if (ViewBag.swalFireAdd != null)
+    {<i class="swalFireADD"></i>}
+    @if (ViewBag.swalFireDelete != null)
+    {<i class="swalFireDELETE"></i>}
+
+    <a></a>
+
+    <div class="p-2 pl-4 mb-4 mt-3 rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Kategori Listesi</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div>@Html.Label("Arama Çubuğu")</div>
+            <div class="input-group">
+                <div class="input-group mb-3">
+                    @Html.TextBox("search", null, new { @class = "form-control", @id = "searchTextBox" })
+                    <div class="input-group-append">
+                        <input id="searchSubmit" type="submit" class="btn btn-primary" value="Ara" />
+                        <input id="searchRemove" type="submit" class="btn btn-outline-primary" value="Filtreyi Kaldır" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div>@Html.Label("İndirme Seçenekleri")</div>
+            <a href="~/CATEGORY/CATEGORY_EXPORT_PDF" class="btn btn-primary">PDF İndir</a>
+        </div>
+        <div class="col-3">
+            <div>@Html.Label("Sayfalama Seçenekleri")</div>
+            @Html.DropDownList("pageOptions",
+                 new List<SelectListItem> {
+                     new SelectListItem {
+                        Text="5",
+                        Value="5",
+                        Selected = true,
+                     },
+                     new SelectListItem {
+                        Text="6",
+                        Value="6",
+                     },
+                       new SelectListItem {
+                        Text="4",
+                        Value="4",
+                     },
+                 }, null, new { @class = "form-control", @id = "pageOptions" })
+        </div>
+    </div>
+
+    @if (ViewBag.ERROR == true)
+    {
+    <script>console.log("asfas")</script>}
+
+    <table class="table table-hover table-light table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Ad</th>
+                <th scope="col">Resim</th>
+                <th scope="col">Durum</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="ModelKayitListesi"></tbody>
+    </table>
+
+    <a href="~/CATEGORY/CATEGORY_ADD" class="btn btn-block text-white btn-success">Yeni Ekle</a>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @foreach (int i in ViewBag.pagenationList)
+                {
+                    <li class="page-item "><a class="page-link pageNo">@i</a></li>
+                }
+        </ul>
+    </nav>
+</div>

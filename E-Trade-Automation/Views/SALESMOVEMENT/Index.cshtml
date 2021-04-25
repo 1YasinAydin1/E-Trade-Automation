@@ -1,0 +1,39 @@
+﻿@using Asp.NET_E_Commerce_MVC5_ENTITY_.Models
+@model List<SALESMOVEMENT>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+
+<div class="container-fluid mt-4">
+  
+    <div class="p-2 pl-4 mb-4 rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Satış Hareketleri Listesi</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+
+        <table class="table table-hover mb-3 table-light table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Personel</th>
+                    <th scope="col">Cari</th>
+                    <th scope="col">Tarih</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+            {
+                    <tr>
+                        <td>@x.ID</td>
+                        <td>@x.EMPLOYEE.NAME</td>
+                        <td>@x.CARI.NAME</td>
+                        <td>@x.DATE</td>
+                        <td><a class="btn text-info p-0" href="~/SALESMOVEMENT/SALESMOVEMENTLOWER/@x.ID"><i class="fa fa-info-circle"></i> Ürün Detayı</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a href="~/SALESMOVEMENT/SALESMOVEMENT_ADD" class="btn btn-block text-white btn-success">Yeni Satış</a>
+</div>

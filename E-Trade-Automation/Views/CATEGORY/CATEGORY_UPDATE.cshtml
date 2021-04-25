@@ -1,0 +1,39 @@
+﻿@model Asp.NET_E_Commerce_MVC5_ENTITY_.Models.CATEGORY
+@{
+    ViewBag.Title = "CATEGORY_UPDATE";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+
+<div class="m-3">
+    <div class="p-2 pl-4 mb-4 rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Kategori Güncelleme Formu</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+    <hr />
+
+    <form class="form-group" method="post" enctype="multipart/form-data">
+        @Html.Label("Kategori Adı")
+        @Html.TextBoxFor(c => c.NAME, new { @class = "form-control" })
+        <div style="position:relative">
+            <span style="position:absolute;right:20px">@Html.ValidationMessage("NAME", new { @style = "color:red" })</span>
+        </div>
+        <br />
+        <input name="CATEGORY_IMAGE_UPDATE" type="file" />
+        <br />
+        <br />
+        @Html.Label("Kategori Durumu")
+        @Html.DropDownList("CATEGORY_STATUS",
+                 new List<SelectListItem> {
+                     new SelectListItem {
+                        Text="Etkin",
+                        Value="1",
+                        Selected = true
+                     },
+                     new SelectListItem {
+                        Text="Pasif",
+                        Value="0",
+                     },
+                 }, new { @class = "form-control" })
+        <button class="mt-3 btn btn-block text-white btn-info">Güncelle</button>
+    </form>
+</div>

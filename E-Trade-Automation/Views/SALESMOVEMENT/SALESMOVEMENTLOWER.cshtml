@@ -1,0 +1,40 @@
+﻿@using Asp.NET_E_Commerce_MVC5_ENTITY_.Models
+@model List<SALESMOVEMENTLOWER>
+@{
+    ViewBag.Title = "SALESMOVEMENTLOWER";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+
+
+<div class="container-fluid mt-4">
+
+    <div class="p-2 pl-4 mb-4 rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Satış Detayı Ürün Listesi</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+
+    <table class="table table-hover mb-3 table-light table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Ürün Adı</th>
+                <th scope="col">Adet</th>
+                <th scope="col">Birim Fiyat</th>
+                <th scope="col">Genel Fiyat</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.ID</td>
+                    <td>@x.Name </td>
+                    <td>@x.Count</td>
+                    <td>@x.Price</td>
+                    <td>@x.GeneralPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

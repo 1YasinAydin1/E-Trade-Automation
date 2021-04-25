@@ -1,0 +1,437 @@
+﻿
+@{
+    ViewBag.Title = "MESSAGE";
+    Layout = "~/Views/Shared/_CARILAYOUT.cshtml";
+}
+
+@section scripts {
+<!-- include libraries(jQuery, bootstrap) -->
+    <style>
+        .messageIDetail{
+        }
+        .messageIDetail:hover{box-shadow:1px 1px 7px #4e4444;cursor:pointer}
+    </style>
+<script>
+        var mainUrl = $("#mainconfig").attr("data-mainurl");
+        $(function () {
+            var html = "";
+    $('#main')
+            function forTable(data) {
+                for (var i = 0; i < data.length; i++) {
+                    var dat = data[i];
+                    var date = new Date(parseInt(dat.DATE.substr(6)));
+                    var hour = date.getHours();
+                    var minute = date.getMinutes();
+                    var outTime = hour + ':' + minute;
+                    var month = date.getMonth();
+                    var ouPutDate = date.toDateString();
+                    ouPutDate = ouPutDate.substr(7);
+                    var out = (month + 1).toString() + ouPutDate + ' - ' + outTime;
+                    var comment = dat.COMMENT;
+                    if (comment.length > 30) { comment = comment.substr(0, 30); comment+= ' ...' }
+                    html += ' <tr class="messageIDetail" id="' + dat.ID + '">\
+                                      <td class="mailbox-name w-25 text-blue">' + dat.SENDERMAIL + '</td>\
+                                      <td class="mailbox-subject row pb-0">\
+                                          <b>' + dat.ISSUE + '</b>&nbsp;&nbsp;-&nbsp;&nbsp; ' + comment + '</td>\
+                                      <td class="mailbox-date w-25">' + out + '</td>\
+                                  </tr>';
+                }
+            };
+            
+            getReceiverMessageList();
+            $('#tableTitle').text("Gelen Kutusu");
+            function getReceiverMessageList() {
+                $.ajax({
+                    url: '@Url.Content("~/CARIPROFILE/RECEIVERMESSAGE")',
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        html = '';
+                        if (data.length != undefined && data.length != null && data.length > 0) {
+                            forTable(data);
+                            $("#messageTable").slideDown();
+                            $(".mailbox-controls").slideDown();
+                            $("#messageTable").html(html);
+                            $("#messageDetail").slideUp();
+                            $('#messageNew').slideUp();
+                            tablerightoptionfill();
+                        }
+                    }
+                });
+            };
+            function getSenderMessageList() {
+                $.ajax({
+                    url: '@Url.Content("~/CARIPROFILE/SENDERMESSAGE")',
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        html = '';
+                        if (data.length != undefined && data.length != null && data.length > 0) {
+                            forTable(data);
+                            $("#messageTable").slideDown();
+                            $(".mailbox-controls").slideDown();
+                            $("#messageTable").html(html);
+                            $("#messageDetail").slideUp();
+                            $('#messageNew').slideUp();
+                            tablerightoptionfill();
+                        }
+                    }
+                });
+            };
+
+            $('#receiverMessage').click(() => {
+                getReceiverMessageList(); $('#tableTitle').text("Gelen Kutusu");
+            });
+            $('#senderMessage').click(() => {
+                getSenderMessageList(); $('#tableTitle').text("Gönderilen Mesajlar");
+            });
+            $('#newMessage').click(() => {
+                newMessage(); $('#tableTitle').text("Yeni Mesaj");
+            });
+            $(".nav-item").click(function () {
+                $(".nav-item").removeClass("bg-blue")
+                $(this).toggleClass("bg-blue");
+            });
+
+              $(document).on("click", '.messageIDetail', function (e) {
+                e.preventDefault();
+                debugger;
+                var ID = $(this).attr("id");
+                getMessageDetail(ID);
+                });
+            function getMessageDetail(ID) {
+                $.ajax({
+                    url: '@Url.Content("~/CARIPROFILE/MESSAGEDETAIL?ID=")' + ID,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        html = '';
+                            html = ' <div class="mailbox-read-info">\
+                                <h5>Konu : ' + data.ISSUE + '</h5><h6>Alıcı : ' + data.RECEIVERMAIL + '\
+                                <span class="mailbox-read-time float-right">'+data.DATE+'</span></h6>\
+                                    </div><div class="mailbox-read-message my-3">' + data.COMMENT + '</div>';
+                            $("#messageDetail").show();
+                            $(".mailbox-controls").show();
+                            $("#messageDetail").html(html);
+                            $("#messageTable").hide();
+                            $('#messageNew').hide();
+                            $(".nav-item").removeClass("bg-blue");
+                    }
+                });
+            };
+
+            function tablerightoptionfill(){
+                $('#table-right-option').html('<div class="input-group input-group-sm">\
+                                <input type="text" class="form-control" placeholder="Ara...">\
+                                <div class="input-group-append">\
+                                    <div class="btn btn-primary"><i class="fas fa-search"></i></div></div></div>');
+            }
+
+            function newMessage() {
+                $("#messageNew").show(); 
+                $(".mailbox-controls").hide();
+                $("#messageDetail").hide();
+                $("#messageTable").hide();
+                
+                html = '<div class="form-group m-3"><input class="form-control" id="RECEIVERMAIL" placeholder="To:"></div>\
+                            <div class="form-group mx-3"><input class="form-control"  id="ISSUE" placeholder="Subject:"></div>\
+                        <div class="p-3"><textarea class="form-control" id="bacibaci" rows="15"></textarea>\
+                        <span id="rchars">15</span></div>';
+                
+                $("#messageNew").html(html);
+                
+                $('#table-right-option').html('<button class="btn btn-primary btn-block" style="padding:0.05em 1em" id="sendMessage">Gönder</button>');
+                $(".nav-item").removeClass("bg-blue");
+            };
+
+            $(document).on("keyup", '#bacibaci', function (e) {
+                var text = $(this).val().split('');
+                var count = $('#rchars').text();
+                if (text.length>15) {
+                    $(this).val($(this).val().substr(0, 15));
+                    $('#rchars').text("Max : 15  -  Kalan Karakter : 0");
+                } else { $('#rchars').text(count-1) }
+            });
+
+            $(document).on("click", '#sendMessage', function (e) {
+                setMessageSend();
+            });
+            function setMessageSend() {
+                var RECEIVERMAIL = $('#RECEIVERMAIL').val();
+                var ISSUE = $('#ISSUE').val();
+                var bacibaci = $('#bacibaci').val().toString();
+                var message = {
+                    ID: "", SENDERMAIL: "", RECEIVERMAIL: RECEIVERMAIL, ISSUE: ISSUE, COMMENT: bacibaci, DATE: ""
+                };
+                debugger;
+                $.ajax({
+                    url: '@Url.Content("~/CARIPROFILE/MESSAGESEND")',
+                    type: 'GET',
+                    data: message,
+                    datatype: 'json',
+                    success: function (data) {
+                        getSenderMessageList(); $('#tableTitle').text("Gönderilen Mesajlar");
+                    }
+                });
+            };
+
+            $('.checkbox-toggle').click(function () {
+
+                var clicks = $(this).data('clicks')
+
+                if (clicks) {
+
+                    //Uncheck all checkboxes
+
+                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+
+                    $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+
+                } else {
+
+                    //Check all checkboxes
+
+                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+
+                    $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+
+                }
+
+                $(this).data('clicks', !clicks)
+
+            })
+            $('.mailbox-star').click(function (e) {
+
+                e.preventDefault()
+
+                //detect type
+
+                var $this = $(this).find('a > i')
+
+                var glyph = $this.hasClass('glyphicon')
+
+                var fa = $this.hasClass('fa')
+
+
+                //Switch states
+
+                if (glyph) {
+
+                    $this.toggleClass('glyphicon-star')
+
+                    $this.toggleClass('glyphicon-star-empty')
+
+                }
+
+
+                if (fa) {
+
+                    $this.toggleClass('fa-star')
+
+                    $this.toggleClass('fa-star-o')
+
+                }
+
+            })
+        })</script>
+    <script src="~/AdminLTE-3.0.4/dist/js/demo.js"></script>
+}
+<div class="hold-transition sidebar-mini">
+
+    <!-- Navbar -->
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+
+   
+
+    <!-- Main content -->
+
+    <section class="content mt-3">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <button class="btn btn-primary btn-block mb-3" id="newMessage">Yeni Mesaj</button>
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3 class="card-title">Klasörler</h3>
+
+                        <div class="card-tools">
+
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+
+                                <i class="fas fa-minus"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body p-0">
+
+                        <ul class="nav nav-pills flex-column">
+
+                            <li class="nav-item active bg-blue">
+
+                                <a href="#" id="receiverMessage" class="nav-link">
+
+                                    <i class="fas fa-inbox"></i> Gelen Kutusu
+
+                                    <span class="badge bg-primary float-right">12</span>
+
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a href="#" id="senderMessage" class="nav-link">
+
+                                    <i class="far fa-envelope"></i> Gönderilen Mesajlar
+
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a href="#" class="nav-link">
+
+                                    <i class="far fa-trash-alt"></i> Çöp Kutusu
+
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- /.card-body -->
+
+                </div>
+
+                <!-- /.card -->
+
+
+                <!-- /.card -->
+
+            </div>
+
+            <!-- /.col -->
+
+            <div class="col-md-9">
+
+                <div class="card card-primary card-outline">
+
+                    <div class="card-header">
+
+                        <h3 class="card-title" id="tableTitle"></h3>
+
+                        <div class="card-tools" id="table-right-option">
+
+                           
+
+                        </div>
+
+                        <!-- /.card-tools -->
+
+                    </div>
+
+                    <!-- /.card-header  -->
+
+                    <div class="card-body p-0">
+
+                        <div class="mailbox-controls">
+
+                            <!-- Check all button -->
+
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+
+                                <i class="far fa-square"></i>
+
+                            </button>
+
+                            <div class="btn-group">
+
+                                <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+
+                                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
+
+                                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
+
+                            </div>
+
+                            <!-- /.btn-group -->
+
+                            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+
+                            <div class="float-right">
+
+                                1-50/200
+
+                                <div class="btn-group">
+
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+
+                                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+
+                                </div>
+
+                                <!-- /.btn-group -->
+
+                            </div>
+
+                            <!-- /.float-right -->
+
+                        </div>
+
+                      
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <tbody id="messageTable">
+                                    @*<tr class="messageIDetail">
+                                        <td class="mailbox-name w-25 text-blue">impala@gmail.com</td>
+                                        <td class="mailbox-subject row pb-0">
+                                            <b> dat.ISSUE</b>&nbsp;&nbsp;-&nbsp;&nbsp;asf
+                                        </td>
+                                        <td class="mailbox-date bg-blue w-25">' + dat.DATE + '</td>
+                                    </tr>*@
+                                </tbody>
+
+                            </table>
+                            <div id="messageDetail"></div>
+                            <div id="messageNew"></div>
+                            <!-- /.table -->
+
+                        </div>
+
+                        <!-- /.mail-box-messages -->
+
+                    </div>
+
+                    <!-- /.card-body -->
+
+                </div>
+
+                <!-- /.card -->
+
+            </div>
+
+            <!-- /.col -->
+        </div>
+
+        <!-- /.row -->
+
+    </section>
+
+
+</div>
+

@@ -1,0 +1,115 @@
+﻿@using Asp.NET_E_Commerce_MVC5_ENTITY_.Models
+@model List<PRODUCT>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+@section scripts {
+
+    <link rel="stylesheet" href="~/Content/jquery.fancybox.css?v=2.1.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="~/Scripts/jquery.fancybox.pack.js?v=2.1.7"></script>
+    <script>
+        $(function () {
+            $(".fancybox").fancybox({ openEffect: 'elastic', closeEffect: 'elastic', helpers: { title: { type: 'inside' } } });
+            $("#CATEGORYLİST").change(function () {
+                var key = $(this).val();
+                $(location).attr("href", "?CATEGORYID=" + key);
+            });
+            $('a.pageNo').click(function () {
+                var key = $(this).html() - 1;
+                $(location).attr("href", "?pageNo=" + key);
+            });
+            $('#pageOptions').change(function () {
+                var key = $(this).val();
+                $(location).attr("href", "?pageOptions=" + key);
+            });
+        });</script>
+}
+<div class="container-fluid mt-4">
+    <div class="p-2 pl-4 mb-4  rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Ürün Listesi</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+    @using (Html.BeginForm("Index", "PRODUCT", FormMethod.Post))
+    {
+        <div class="row mt-2">
+            <div class="col-6">
+                <div>@Html.Label("Arama Çubuğu")</div>
+                <div class="input-group">
+                    <div class="input-group mb-3">
+                        @Html.TextBox("search", null, new { @class = "form-control" })
+                        <div class="input-group-append">
+                            <input id="searchSubmit" type="submit" class="btn btn-primary" value="Ara" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div>@Html.Label("Filtreleme")</div>
+                @Html.DropDownList("CATEGORYLİST", null, new { @class = "form-control", @id = "CATEGORYLİST" })
+            </div>
+            <div class="col-3">
+                <div>@Html.Label("Sayfalama Seçenekleri")</div>
+                @Html.DropDownList("pageOptions",
+                 new List<SelectListItem> {
+                     new SelectListItem {
+                        Text="2",
+                        Value="2",
+                        Selected = true,
+                     },
+                     new SelectListItem {
+                        Text="3",
+                        Value="3",
+                     },
+                       new SelectListItem {
+                        Text="4",
+                        Value="4",
+                     },
+                 }, null, new { @class = "form-control", @id = "pageOptions" })
+            </div>
+        </div>
+    }
+    <table class="table table-hover table-light table-striped">
+        <thead class="">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Ad</th>
+                <th scope="col">Marka</th>
+                <th scope="col">Stok Adet</th>
+                <th scope="col">Alış Fiyatı</th>
+                <th scope="col">Satış Fiyatı</th>
+                <th scope="col">Durum</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Resim</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.ID</td>
+                    <td>@x.NAME</td>
+                    <td>@x.BRAND</td>
+                    <td>@x.STOCK</td>
+                    <td>@x.BUYPRICE</td>
+                    <td>@x.SALESPRICE</td>
+                    <td>@Html.Label(x.STATUS.Equals(true) ? "Etkin" : "Pasif")</td>
+                    <td>@x.CATEGORY1.NAME</td>
+                    <td><a href="~/Image/@x.IMAGE" class="fancybox" rel="group"><img src="~/Image/@x.IMAGE" height="100" /></a></td>
+                    <td><a class="btn text-danger p-0" href="~/PRODUCT/PRODUCT_DELETE/@x.ID">Sil</a></td>
+                    <td><a class="btn text-info p-0" href="~/PRODUCT/PRODUCT_UPDATE/@x.ID">Güncelle</a></td>
+                </tr>}
+        </tbody>
+    </table>
+    <a href="~/PRODUCT/PRODUCT_ADD" class="btn btn-block text-white btn-success">Yeni Ekle</a>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @foreach (int i in ViewBag.pagenationList)
+            {
+                <li class="page-item "><a class="page-link pageNo">@i</a></li>
+            }
+        </ul>
+    </nav>
+</div>

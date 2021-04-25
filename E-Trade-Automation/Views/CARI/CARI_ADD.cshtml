@@ -1,0 +1,48 @@
+﻿@model Asp.NET_E_Commerce_MVC5_ENTITY_.Models.CARI
+@{
+    ViewBag.Title = "CARI_ADD";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+<div class="m-3">
+    <div class="p-2 pl-4 mb-4 rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Yeni Cari Ekleme Formu</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+    <hr />
+
+    <form class="form-group" method="post" enctype="multipart/form-data">
+        @Html.Label("Cari Ad")
+        @Html.TextBoxFor(c => c.NAME, new { @class = "form-control" })
+        <div style="position:relative">
+            <span style="position:absolute;right:20px">@Html.ValidationMessage("NAME", new { @style = "color:red" })</span>
+        </div>
+        <br />
+        @Html.Label("Cari Soyad")
+        @Html.TextBoxFor(c => c.LASTNAME , new { @class = "form-control" })
+        <div style="position:relative">
+            <span style="position:absolute;right:20px">@Html.ValidationMessage("LASTNAME", new { @style = "color:red" })</span>
+        </div>
+        <br />
+        @Html.Label("Şehir")
+        @Html.TextBoxFor(c => c.CITY, new { @class = "form-control" })
+        <div style="position:relative">
+            <span style="position:absolute;right:20px">@Html.ValidationMessage("CITY", new { @style = "color:red" })</span>
+        </div>
+        <br />
+        @Html.Label("Cari Mail")
+        @Html.TextBoxFor(c => c.MAIL, new { @class = "form-control" })
+        <div style="position:relative">
+            <span style="position:absolute;right:20px">@Html.ValidationMessage("MAIL", new { @style = "color:red" })</span>
+        </div>
+        <br />
+        @Html.Label("Cari Resim Url")
+        <br />
+        <input name="CARI_IMAGE" type="file" />
+        <div style="position:relative">
+            <span style="position:absolute;right:20px">@Html.ValidationMessage("IMAGE", new { @style = "color:red" })</span>
+        </div>
+        <br />
+        <button class="mt-3 btn btn-success">Ekle</button>
+    </form>
+</div>
+

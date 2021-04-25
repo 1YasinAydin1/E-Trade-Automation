@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="905835d0be1c472f9e25dceaf6925cd5" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="EFCommerceModel.CARI" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.CARILOGIN" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.CATEGORY" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.DEPARTMENT" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.EMPLOYEE" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.EMPLOYEELOGIN" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.EXPENSE" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.INVOICE" Width="1.5" PointX="5.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.INVOICEPEN" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.PRODUCT" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.SALESMOVEMENT" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EFCommerceModel.SALESMOVEMENTLOWER" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="EFCommerceModel.FK_SALESMOVEMENT_CARI" ManuallyRouted="false" />
+        <AssociationConnector Association="EFCommerceModel.FK_PRODUCT_CATEGORY" ManuallyRouted="false" />
+        <AssociationConnector Association="EFCommerceModel.FK_EMPLOYEE_DEPARTMENT" ManuallyRouted="false" />
+        <AssociationConnector Association="EFCommerceModel.FK_SALESMOVEMENT_EMPLOYEE" ManuallyRouted="false" />
+        <AssociationConnector Association="EFCommerceModel.FK_INVOICEPEN_INVOICE" ManuallyRouted="false" />
+        <AssociationConnector Association="EFCommerceModel.FK_SALESMOVEMENTLOWER_PRODUCT" ManuallyRouted="false" />
+        <AssociationConnector Association="EFCommerceModel.FK_SALESMOVEMENTLOWER_SALESMOVEMENT" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EFCommerceModel.MESSAGE" Width="1.5" PointX="10.375" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

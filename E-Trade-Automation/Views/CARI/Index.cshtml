@@ -1,0 +1,50 @@
+﻿@using Asp.NET_E_Commerce_MVC5_ENTITY_.Models
+@model List<CARI>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+
+@section scripts {
+    <link rel="stylesheet" href="~/Content/jquery.fancybox.css?v=2.1.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="~/Scripts/jquery.fancybox.pack.js?v=2.1.7"></script>
+    <script>$(function () {$(".fancybox").fancybox({openEffect: 'elastic',closeEffect: 'elastic',helpers: {title: {type: 'inside'}}});});</script>
+}
+
+
+<div class="container-fluid mt-4">
+
+    <div class="p-2 pl-4 mb-4 rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Cari Listesi</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+
+    <table class="table table-hover table-light table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Ad</th>
+                <th scope="col">Soyad</th>
+                <th scope="col">Şehir</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Resim</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.ID</td>
+                    <td>@x.NAME</td>
+                    <td>@x.LASTNAME</td>
+                    <td>@x.CITY</td>
+                    <td>@x.MAIL</td>
+                    <td><a href="~/Image/@x.IMAGE" class="fancybox" rel="group"><img src="~/Image/@x.IMAGE" height="70" /></a></td>
+                    <td><a class="btn text-danger p-0" href="~/CARI/CARI_DELETE/@x.ID">Sil</a></td>
+                    <td><a class="btn text-info p-0" href="~/CARI/CARI_UPDATE/@x.ID">Güncelle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="~/CARI/CARI_ADD" class="btn btn-block text-white btn-success">Yeni Ekle</a>
+</div>

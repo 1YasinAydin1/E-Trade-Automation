@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Asp.NET_E_Commerce_MVC5_ENTITY_.Models.CATEGORY>
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+
+
+<table id="example" class="table table-hover table-light table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Ad</th>
+            <th scope="col">Resim</th>
+            <th scope="col">Durum</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+            {
+            <tr>
+                <td>@x.ID</td>
+                <td>@x.NAME</td>
+                <td><a href="~/Image/@x.IMAGE" class="fancybox" rel="group"><img src="~/Image/@x.IMAGE" height="100" /></a></td>
+                <td>@x.STATUS</td>
+                <td><a class="btn text-danger p-0" href="~/CATEGORY/CATEGORY_DELETE/@x.ID">Sil</a></td>
+                <td><a class="btn text-info p-0" href="~/CATEGORY/CATEGORY_UPDATE/@x.ID">Güncelle</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+    <script>
+	$(document).ready(function() {
+	    var table = $('#example').DataTable( {
+	        lengthChange: false,
+	        buttons: [ 'copy', 'excel', 'csv', 'pdf', 'colvis' ]
+	    } );
+
+	    table.buttons().container()
+	        .appendTo( '#example_wrapper .col-md-6:eq(0)' );
+	} );
+    </script>}

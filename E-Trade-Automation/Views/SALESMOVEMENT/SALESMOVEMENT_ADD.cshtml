@@ -1,0 +1,118 @@
+﻿@model Asp.NET_E_Commerce_MVC5_ENTITY_.Models.SALESMOVEMENT
+@{
+    ViewBag.Title = "SALESMOVEMENT_ADD";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+
+@section scripts {
+    <script>
+        $(function () {
+            $('table').hide();
+            $('.event').change(function () {
+                var price = $('#price').val();
+                $.ajax({
+                    url: '@Url.Content("~/SALESMOVEMENT/GetProductPrice?ID=")' + price,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        if (data.length != undefined && data.length != null && data.length > 0) {
+                            var count = $('#count').val();
+                            $("#piece").html(data);
+                            var variable = count * data;
+                            $('#Total').html(variable);
+                        }
+                    }
+                });
+            });
+               
+            $('#addProduct').click(function (e) {
+                $('table').slideDown();
+                e.preventDefault();
+                var productID = $('#price').val();
+                var employeeID = $('#employeeID').val();
+                var cariID = $('#cariID').val();
+                var count = $('#count').val();
+                if (count.length == 0) {
+                    alert("Satın almak istediğiniz ürünün adet sayısını giriniz");
+                } else {
+                    $.ajax({
+                        url: '@Url.Content("~/SALESMOVEMENT/appendGetProduct?productID=")' + productID + '&count=' + count + '&employeeID=' + employeeID + '&cariID=' + cariID,
+                        type: 'GET',
+                        datatype: 'json',
+                        success: function (data) {
+                            if (data.ID == 0) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Eklendi',
+                                    text: 'Categori Başarı ile Eklendi!',
+                                    confirmButtonText: 'Kapat'
+                                })
+                                alert("Bu üründen stokta " + data.Price + " adet vardır.Bu üründen " + data.Count +" adet satın alamazsınız");
+                            }else{
+                                $('<tr>\
+                                     <td>' + data.Name + '</td>\
+                                     <td>' + data.Price + '</td>\
+                                     <td>' + data.Count + '</td>\
+                                     <td>' + data.GeneralPrice + '</td>\
+                                  </tr>').appendTo('#appendTR');
+                            }
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
+}
+
+<div class="m-3">
+    <div class="p-2 pl-4 mb-4  rounded" style="display:flex;flex-wrap:wrap;align-items:center;background-color:#434851">
+        <div class="m-0 text-white" style="text-align:center;width:20%"><h5 class="m-0">Yeni Satış Hareketi Ekleme Formu</h5></div>
+        <div class="bg-white rounded ml-5" style="height:2px;width:70%"></div>
+    </div>
+    <hr />
+
+    <form class="form-group" style="position:relative" method="post" enctype="multipart/form-data">
+        @Html.Label("Personel Adı")
+        @Html.DropDownListFor(c => c.EMPLOYEEID, (List<SelectListItem>)ViewBag.EMPLOYEELİST, new { @class = "form-control", @id = "employeeID" })
+        <br />
+        @Html.Label("Cari Adı")
+        @Html.DropDownListFor(c => c.CARIID, (List<SelectListItem>)ViewBag.CARILİST, new { @class = "form-control", @id = "cariID" })
+        <br />
+
+        @Html.Label("Ürün adı")
+        @Html.DropDownList("producID",(List<SelectListItem>)ViewBag.PRODUCTLİST, new { @class = "form-control event", @id = "price" })
+        <br />
+        @Html.Label("Adet")
+        @Html.TextBox("count","", new { @class = "form-control event", @type = "number", @id = "count" })
+        <div style="position:relative">
+            <span style="position:absolute;right:20px">@Html.ValidationMessage("COUNT", new { @style = "color:red" })</span>
+        </div>
+        <div style="position:relative" class="mt-3">
+            <button class="btn btn-primary" style="position:absolute;right:50px" id="addProduct">Ürün Ekle</button>
+        </div>
+        <br /><br />
+        <nav aria-label="breadcrumb">
+            <div class="bg-info text-white rounded row mx-1 p-2">
+                <div class="col-9" aria-current="page">Adet Fiyat : <span id="piece">0</span> TL</div>
+                <div class="col-3" aria-current="page">Genel Toplam : <span id="Total">0</span> TL</div>
+            </div>
+        </nav>
+        <br />
+        <table class="table table-hover table-light table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Ürün</th>
+                    <th scope="col">Fiyat</th>
+                    <th scope="col">Adet</th>
+                    <th scope="col">Toplam</th>
+                </tr>
+            </thead>
+            <tbody id="appendTR">
+                   
+            </tbody>
+        </table>
+        <button class="mt-3 btn btn-success">Satışı gerçekleştir</button>
+    </form>
+</div>
+

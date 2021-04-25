@@ -1,0 +1,46 @@
+﻿@using Asp.NET_E_Commerce_MVC5_ENTITY_.Models
+@model List<EMPLOYEE>
+@{
+    ViewBag.Title = "DEPARTMENT_EMPLOYEE_DETAIL";
+    Layout = "~/Views/Shared/_ADMINLAYOUT.cshtml";
+}
+@section scripts {
+    <link rel="stylesheet" href="~/Content/jquery.fancybox.css?v=2.1.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="~/Scripts/jquery.fancybox.pack.js?v=2.1.7"></script>
+    <script>$(function () { $(".fancybox").fancybox({ openEffect: 'elastic', closeEffect: 'elastic', helpers: { title: { type: 'inside' } } }); });</script>
+}
+
+
+<ol class="breadcrumb m-3" style="position:relative">
+    <li class="breadcrumb-item active" aria-current="page">Departman Adı : <b>@ViewBag.DNAME</b>
+        <span style="position:absolute;right:50px;">Personel Listesi</span>
+    </li>
+</ol>
+
+<div class="container-fluid mt-4">
+
+    <table class="table table-hover table-light table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Ad</th>
+                <th scope="col">Soyad</th>
+                <th scope="col">Resim</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.ID</td>
+                    <td>@x.NAME</td>
+                    <td>@x.LASTNAME</td>
+                    <td><a href="~/Image/@x.IMAGE" class="fancybox" rel="group"><img src="~/Image/@x.IMAGE" height="70" /></a></td>
+                    <td><a class="btn text-info p-0" href="~/DEPARTMENT/EMPLOYEE_SALESMOVEMENT_DETAIL/@x.ID"><i class="fa fa-info-circle"></i> Detay</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
